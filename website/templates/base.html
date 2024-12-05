@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %}Home{% endblock %}</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #ffffff;
+                color: #333;
+            }
+            header {
+                background-color: #1e35e2;
+                color: white;
+                text-align: center;
+                padding: 20px 0;
+            }
+            /* Center and Bold Flash Messages */
+            .flash-messages {
+                margin: 10px auto;
+                text-align: center;
+                padding: 15px;
+                font-size: 18px;
+                font-weight: bold;
+                width: 80%;  /* Adjust the width as needed */
+                max-width: 600px; /* Limit the width to a maximum of 600px */
+            }
+            .flash-messages .error {
+                background-color: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 5px;
+            }
+            .flash-messages .success {
+                background-color: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 5px;
+            }
+            main {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;  /* Align items at the top */
+                padding-top: 20px;  /* Add some space at the top */
+                min-height: 80vh;  /* Ensure there's enough space on the page */
+            }
+            button {
+                background-color: #1e35e2;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                margin: 10px;
+                font-size: 24px;
+                cursor: pointer;
+                border-radius: 5px;
+                width: 200px; /* Ensures all buttons are the same width */
+                height: 50px; /* Ensures all buttons are the same height */
+                display: inline-block;
+                text-align: center; /* Centers text inside the button */
+                white-space: nowrap; /* Prevents text wrapping */
+            }
+            button:hover {
+                background-color: #0262d7;
+            }
+            footer {
+                background-color: #333;
+                color: white;
+                text-align: center;
+                padding: 10px 0;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            {% block content %} {% endblock %}
+        </header>
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="{{ 'success' if category == 'success' else 'error' }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        <main>
+            {% if user.is_authenticated %}
+            <button onclick="window.location.href='/'">Home</button>
+            <button onclick="window.location.href='/quiz'">Quiz</button>
+            <button onclick="window.location.href='/profile'">Profile</button>
+            <button onclick="window.location.href='/logout'">Logout</button>
+            {% else %}
+            <button onclick="window.location.href='/sign-up'">Sign Up</button>
+            <button onclick="window.location.href='/login'">Login</button>
+            {% endif %}
+        </main>
+        <footer>
+            <p>&copy; 2024 Tage Hermansson</p>
+        </footer>
+    </body>
+</html>

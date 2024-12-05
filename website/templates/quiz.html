@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Play Quiz{% endblock %}
+
+{% block content %}
+<h1>Quiz Time</h1>
+
+<div style="margin-bottom: 20px; text-align: center; width: 100%;">
+
+    <!-- Centered question wrapper -->
+    <div class="question-wrapper" style="width: 100%; text-align: center;">
+        <h2>Question {{ current_index }} of {{ total_questions }}</h2>
+        <h3>{{ question.question }}</h3>
+    </div>
+
+    <form action="/quiz" method="POST">
+        <!-- Centered grid container for answer buttons -->
+        <div class="answers-grid">
+            {% for option in question.options %}
+                {% if question.get('answered_correctly', False) %}
+                    <!-- Hide button if answer is correct -->
+                    <button type="submit" name="answer" value="{{ option }}" class="quiz-button" style="display:none;">
+                        {{ option }}
+                    </button>
+                {% else %}
+                    <button type="submit" name="answer" value="{{ option }}" class="quiz-button">
+                        {{ option }}
+                    </button>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </form>
+</div>
+
+<style>
+    /* Ensure the entire quiz content is centered */
+    .question-wrapper {
+        text-align: center;
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    /* Center the answers grid */
+    .answers-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive grid */
+        gap: 10px;
+        margin-top: 20px;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically within the grid */
+        max-width: 90%; /* Ensure it doesn't stretch too wide */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Styling for each answer button */
+    .quiz-button {
+        width: 100%;
+        padding: 20px;
+        background-color: #1e35e2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Button hover effect */
+    .quiz-button:hover {
+        background-color: #0262d7;
+    }
+
+    /* Disabled button styling */
+    .quiz-button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+    }
+</style>
+
+{% endblock %}
