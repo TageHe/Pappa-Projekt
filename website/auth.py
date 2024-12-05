@@ -128,14 +128,13 @@ def quiz():
         if selected_answer == correct_answer:
             state['score'] += 1  # Increase score for correct answer
             questions[current_index]['answered_correctly'] = True
+            state['current_index'] = (state['current_index'] + 1) % len(questions)  # Move to the next question
         else:
             # If answer is wrong, move the question to the end of the list
             question_to_move = questions.pop(current_index)
             questions.append(question_to_move)
             flash('Incorrect answer. This question has been moved to the end of the quiz.', 'error')
 
-        # Move to the next question
-        state['current_index'] = (state['current_index'] + 1) % len(questions)  # Ensure it loops properly
         session['quiz_state'] = state
 
     # Check if the quiz is finished
