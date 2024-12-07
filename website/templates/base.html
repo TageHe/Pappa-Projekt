@@ -44,13 +44,54 @@
                 margin: 10px 0;
                 border-radius: 5px;
             }
-            main {
+            .flash-messages .message {
+                background-color: #d4daed;
+                color: #283892;
+                border: 1px solid #c3c9e6;
+                padding: 10px;
+                margin: 10px 0;
+                border-radius: 5px;
+            }
+            .content-wrapper {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center; /* Centers the content vertically */
+                min-height: 50vh;
+                position: relative;
+            }
+            .leaderboard {
+                position: absolute; /* Fix the position so it doesn’t affect button layout */
+                left: 20px; /* Position leaderboard to the left */
+                width: 250px; /* Fixed width */
+                padding: 20px;
+                background-color: #f5f5f5;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                height: auto; /* Adjust as needed */
+            }
+            .leaderboard h2 {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            .leaderboard ul {
+                list-style-type: none;
+                padding: 0;
+                margin: 0;
+            }
+            .leaderboard li {
+                margin: 5px 0;
+                padding: 5px 10px;
+                background-color: #e6e6e6;
+                border-radius: 5px;
+                font-size: 18px;
+            }
+            .buttons {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                justify-content: flex-start;  /* Align items at the top */
-                padding-top: 20px;  /* Add some space at the top */
-                min-height: 80vh;  /* Ensure there's enough space on the page */
+                justify-content: center; /* Centers the buttons vertically */
+                width: 100%; /* Allows buttons to remain centered */
             }
             button {
                 background-color: #1e35e2;
@@ -74,7 +115,8 @@
                 background-color: #333;
                 color: white;
                 text-align: center;
-                padding: 10px 0;
+                padding: 20px 0;
+                margin-top: 100px;
             }
         </style>
     </head>
@@ -86,24 +128,38 @@
             {% with messages = get_flashed_messages(with_categories=true) %}
                 {% if messages %}
                     {% for category, message in messages %}
-                        <div class="{{ 'success' if category == 'success' else 'error' }}">
+                        <div class="{{ 'success' if category == 'success' else 'error' if category == 'error' else 'message' }}">
                             {{ message }}
                         </div>
                     {% endfor %}
                 {% endif %}
             {% endwith %}
         </div>
-        <main>
-            {% if user.is_authenticated %}
-            <button onclick="window.location.href='/'">Home</button>
-            <button onclick="window.location.href='/quiz'">Quiz</button>
-            <button onclick="window.location.href='/profile'">Profile</button>
-            <button onclick="window.location.href='/logout'">Logout</button>
-            {% else %}
-            <button onclick="window.location.href='/sign-up'">Sign Up</button>
-            <button onclick="window.location.href='/login'">Login</button>
-            {% endif %}
-        </main>
+        <div class="content-wrapper">
+            <!-- Leaderboard Section -->
+            <div class="leaderboard">
+                <h2>Leaderboard</h2>
+                <ul>
+                    {% for user in leaderboard %}
+                        {% if loop.index <= 5 %}
+                            <li>{{ loop.index }}. {{ user[0] }} | {{ user[1] }} </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- Buttons Section -->
+            <div class="buttons">
+                {% if user.is_authenticated %}
+                <button onclick="window.location.href='/'">Home</button>
+                <button onclick="window.location.href='/quiz'">Quiz</button>
+                <button onclick="window.location.href='/profile'">Profile</button>
+                <button onclick="window.location.href='/logout'">Logout</button>
+                {% else %}
+                <button onclick="window.location.href='/sign-up'">Sign Up</button>
+                <button onclick="window.location.href='/login'">Login</button>
+                {% endif %}
+            </div>
+        </div>
         <footer>
             <p>&copy; 2024 Tage Hermansson</p>
         </footer>

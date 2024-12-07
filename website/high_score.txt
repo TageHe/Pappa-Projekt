@@ -1,0 +1,4 @@
+Tage|1054.4
+Magnus|1050.1
+Lisa|991.7
+Tekla|1032.0
