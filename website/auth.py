@@ -192,13 +192,6 @@ def quiz():
         leaderboard = leaderboard
     )
 
-# High scores route to show the leaderboard
-@auth.route('/high_scores', methods=['GET'])
-@login_required
-def high_scores():
-    leaderboard = get_high_scores()  # Get leaderboard data
-    return render_template("high_scores.html", user=current_user, scores=leaderboard)
-
 # Function to update the user's high score
 def update_high_score(username, score):
     file_path = path.join(path.dirname(__file__), "high_score.txt")

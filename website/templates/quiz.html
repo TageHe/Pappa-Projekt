@@ -33,30 +33,24 @@
 </div>
 
 <style>
-    /* Ensure the entire quiz content is centered */
-    .question-wrapper {
-        text-align: center;
-        margin-bottom: 20px;
-        width: 100%;
-    }
-
-    /* Center the answers grid */
+    /* Center the answers and allow dynamic horizontal alignment */
     .answers-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive grid */
-        gap: 10px;
-        margin-top: 20px;
-        justify-content: center; /* Center horizontally */
-        align-items: center; /* Center vertically within the grid */
-        max-width: 90%; /* Ensure it doesn't stretch too wide */
-        margin-left: auto;
-        margin-right: auto;
+        display: flex; /* Use flexbox layout */
+        flex-wrap: wrap; /* Allow wrapping to new rows if needed */
+        gap: 5px; /* Space between buttons */
+        justify-content: center; /* Center all buttons horizontally as a group */
+        align-items: center; /* Center all buttons vertically in their rows */
+        text-align: center; /* Center-align button text */
+        max-width: 95%; /* Optional: limit the grid width for better control */
+        margin: 0 auto; /* Center the grid container horizontally */
     }
 
     /* Styling for each answer button */
     .quiz-button {
-        width: 100%;
-        padding: 20px;
+        flex: 0 1 auto; /* Allow buttons to size dynamically based on content */
+        min-width: 150px; /* Minimum button width */
+        max-width: 200px; /* Optional: limit maximum button width */
+        padding: 10px 20px;
         background-color: #1e35e2;
         color: white;
         border: none;
@@ -75,6 +69,15 @@
     .quiz-button:disabled {
         background-color: #cccccc;
         cursor: not-allowed;
+    }
+
+    /* Center the entire container vertically and horizontally */
+    .quiz-container {
+        display: flex; /* Use flexbox to center everything */
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
+        min-height: 100vh; /* Full screen height */
+        text-align: center;
     }
 </style>
 
