@@ -8,76 +8,63 @@
 <div style="margin-bottom: 20px; text-align: center; width: 100%;">
 
     <!-- Centered question wrapper -->
-    <div class="question-wrapper" style="width: 100%; text-align: center;">
+    <div class="question-wrapper" style = "width: 100%; text-align: center;">
         <!--<h2>Question {{ current_index }} of {{ total_questions }}</h2>-->
         <h2>{{ question.question }}</h2>
+    <div>
+        <form action="/quiz" method="POST">
+            <!-- Centered container for answer input -->
+            <div class = "answer-input-container" style = "position: relative; text-align: center;">
+                <!-- Background-like text area -->
+                <label for="answer" class = "answer-label" style = "display: none;">Enter your answer:</label>
+                <!-- Transparent input field -->
+                <input 
+                    type = "text"
+                    id = "answer"
+                    name = "answer"
+                    class = "answer-input"
+                    placeholder = "Type your answer here..."
+                    required>
+                <button type = "submit" class = "submit-button" style = "margin-top: 20px; display: block;">Submit</button>
+            </div>
+        </form>
     </div>
 
-    <form action="/quiz" method="POST">
-        <!-- Centered grid container for answer buttons -->
-        <div class="answers-grid">
-            {% for option in question.options %}
-                {% if question.get('answered_correctly', False) %}
-                    <!-- Hide button if answer is correct -->
-                    <button type="submit" name="answer" value="{{ option }}" class="quiz-button" style="display:none;">
-                        {{ option }}
-                    </button>
-                {% else %}
-                    <button type="submit" name="answer" value="{{ option }}" class="quiz-button">
-                        {{ option }}
-                    </button>
-                {% endif %}
-            {% endfor %}
-        </div>
-    </form>
-</div>
-
 <style>
-    /* Center the answers and allow dynamic horizontal alignment */
-    .answers-grid {
-        display: flex; /* Use flexbox layout */
-        flex-wrap: wrap; /* Allow wrapping to new rows if needed */
-        gap: 5px; /* Space between buttons */
-        justify-content: center; /* Center all buttons horizontally as a group */
-        align-items: center; /* Center all buttons vertically in their rows */
-        text-align: center; /* Center-align button text */
-        max-width: 95%; /* Optional: limit the grid width for better control */
-        margin: 0 auto; /* Center the grid container horizontally */
+    /* Transparent input field styling */
+    .answer-input {
+        background: none; /* No background color */
+        border: none; /* No border except a subtle underline */
+        border-bottom: none; /* Simulates writing area */
+        outline: none; /* Removes the default focus outline */
+        text-align: center; /* Centers the text */
+        width: 75%; /* Fills most of the parent container */
+        font-size: 40px; /* Makes the text prominent */
+        color: #ffffff; /* Text color to match the design */
     }
 
-    /* Styling for each answer button */
-    .quiz-button {
-        flex: 0 1 auto; /* Allow buttons to size dynamically based on content */
-        min-width: 150px; /* Minimum button width */
-        max-width: 200px; /* Optional: limit maximum button width */
-        padding: 10px 20px;
+    /* Placeholder text styling */
+    .answer-input::placeholder {
+        color: #bbb; /* Subtle placeholder color */
+        font-style: italic;
+    }
+
+    .submit-button {
         background-color: #1e35e2;
         color: white;
         border: none;
         border-radius: 5px;
+        padding: 10px 20px;
         font-size: 16px;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        margin-top: 10px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    /* Button hover effect */
-    .quiz-button:hover {
+    .submit-button:hover {
         background-color: #0262d7;
-    }
-
-    /* Disabled button styling */
-    .quiz-button:disabled {
-        background-color: #cccccc;
-        cursor: not-allowed;
-    }
-
-    /* Center the entire container vertically and horizontally */
-    .quiz-container {
-        display: flex; /* Use flexbox to center everything */
-        justify-content: center; /* Center horizontally */
-        align-items: center; /* Center vertically */
-        min-height: 100vh; /* Full screen height */
-        text-align: center;
     }
 </style>
 

@@ -185,10 +185,10 @@ def quiz():
     leaderboard = get_high_scores()  # Get leaderboard data
     return render_template(
         "quiz.html",
-        user=current_user,
-        question=current_question,
-        current_index=state['current_index'] + 1,
-        total_questions=len(questions),
+        user = current_user,
+        question = current_question,
+        current_index = state['current_index'] + 1,
+        total_questions = len(questions),
         leaderboard = leaderboard
     )
 
